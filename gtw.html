@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>WordScramble</title>
+	<style >
+		*{ margin:0; padding: 0;box-sizing: border-box; }
+		body{
+			background-color: darkgreen;
+		}
+		
+			header{
+				width: 100%;
+				line-height: 15vh;
+				background-color: darkblue;
+			}
+			header{
+				text-align: center;
+				color: white;
+				font-size: 1.8rem;
+				text-transform: uppercase;
+				letter-spacing: 15px;
+
+			}
+		section{
+			height:85wh;
+			display:flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.GameZone{
+			width:50%;
+			height: 400px;
+			padding: 20px 0;
+			background-color: orangered;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			box-shadow: 0 8px 6px -6px black;
+		}
+
+
+		h3{
+			text-align: center;
+			font-size: 1.5 rem;
+		}
+		input{
+			width: 40%;
+			padding: 15px 0;
+			text-align: center;
+			border-radius: 25px;
+			margin: 2rem 0;
+			font-size: 1.1rem;
+		}
+		button{
+			font-size: 1 rem;
+			cursor: pointer;
+			outline: none;
+			border: orangered;
+
+		}
+		button.button{
+			font-size: 600;
+			padding: 1rem 2rem;
+			background: white;
+			text-transform: uppercase;
+			transition-property: all;
+			transition-duration: 0.5s;
+			transition-timing-function: cubic-bezier(0.65, -0.25, 0.25, 1.95);
+		}
+		button.button:hover,button.button:focus, button.button:active{
+			letter-spacing: 0.125rem;
+			word-spacing:0.2 rem;
+		}
+		
+
+                </style>
+		
+</head>
+<body>
+	<header>Word Scrambling</header>
+	<section>
+		<div class="GameZone">
+			<h3 class="message"> </h3>
+			<input type="text" class="hidden">
+			<button class="button">Click Here To Start</button>
+		</div>
+	</section>
+	<script >
+		const message=document.querySelector('.message');
+		const guess=document.querySelector('input');
+		const button=document.querySelector('.button')
+		let play=false;
+		let newwords="";
+		let randwords="";
+		let swords=['car','tiger','race','chess','football','europe','surprise','profit','panic','apple','draw','draft','discipline','identify','inform','explore','attack','defend','equal','scramble'];
+		const createnewwords=()=>{
+              let ranNum=Math.floor(Math.random()*swords.length);
+              let newtempswords=swords[ranNum];
+              return newtempswords;
+            }
+              
+              const scramblewords=(arr)=>{
+                for(let i=arr.length-1;i>0;i--){
+                	let temp=arr[i];
+                	let j=Math.floor(Math.random()*(i+1));
+                	arr[i]=arr[j];
+                	arr[j]=temp;
+                }
+                return arr;
+
+              
+		}
+		button.addEventListener('click',function(){
+			if(!play){
+				play=true;
+				button.innerHTML="Guess";
+				guess.classList.toggle("hidden");
+				newwords=createnewwords();
+				randwords=scramblewords(newwords.split("")).join("");
+				message.innerHTML=randwords;
+			}
+			else{
+				let tempword=guess.value;
+				if(tempword===newwords){
+					play=false;
+					message.innerHTML="Awesome It is Correct!";
+					button.innerHTML="Start Again";
+					guess.classList.toggle("hidden");
+					guess.value="";
+				}
+				else{
+					message.innerHTML="Sorry!It is not correct.Please try again!";
+					$(randwords);
+				}
+			}
+		})
+	</script>
+
+
+</body>
+</html>
